@@ -1,15 +1,18 @@
 // src/middlewares/error.middleware.js
-
 const errorMiddleware = (err, req, res, next) => {
-    // Log the error stack trace to the console (you can also use a logger here)
-    console.error(err.stack);
+    // Log the error stack for debugging.
+    // console.error(err.stack); // ! This will be showing ugly response in the consle but nothing to worry about
+    console.warn(err.stack)
 
-    // Set a default status code if not already set in the error object
+    // If headers have already been sent, delegate to the default Express error handler.
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    // Use the status code provided in the error object, default to 500.
     const statusCode = err.status || 500;
-
-    // Send a JSON response with the error message
     res.status(statusCode).json({
-        message: err.message || 'Internal Server Error',
+        message: err.message || "Internal Server Error",
     });
 };
 
