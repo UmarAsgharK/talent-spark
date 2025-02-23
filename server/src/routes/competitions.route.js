@@ -1,4 +1,3 @@
-// src/routes/competitions.route.js
 import { Router } from 'express';
 import {
     createCompetition,
@@ -10,34 +9,13 @@ import {
 
 const router = Router();
 
-/**
- * @route POST /api/competitions
- * @desc Create a new competition
- */
-router.post('/', createCompetition);
+router.route('/')
+    .post(createCompetition)
+    .get(getAllCompetitions);
 
-/**
- * @route GET /api/competitions
- * @desc Get all competitions
- */
-router.get('/', getAllCompetitions);
-
-/**
- * @route GET /api/competitions/:id
- * @desc Get a single competition by ID
- */
-router.get('/:id', getCompetitionById);
-
-/**
- * @route PUT /api/competitions/:id
- * @desc Update a competition
- */
-router.put('/:id', updateCompetition);
-
-/**
- * @route DELETE /api/competitions/:id
- * @desc Delete a competition
- */
-router.delete('/:id', deleteCompetition);
+router.route('/:id')
+    .get(getCompetitionById)
+    .put(updateCompetition)
+    .delete(deleteCompetition);
 
 export default router;

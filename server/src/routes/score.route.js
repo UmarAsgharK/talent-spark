@@ -10,34 +10,15 @@ import {
 
 const router = Router();
 
-/**
- * @route POST /api/scores
- * @desc Add a new score (judge scoring a submission)
- */
-router.post('/', addScore);
+router.route('/')
+    .post(addScore);
 
-/**
- * @route GET /api/scores/submission/:submissionId
- * @desc Get all scores for a specific submission
- */
-router.get('/submission/:submissionId', getScoresBySubmission);
+router.route('/submission/:submissionId')
+    .get(getScoresBySubmission);
 
-/**
- * @route GET /api/scores/:id
- * @desc Get a single score by ID
- */
-router.get('/:id', getScoreById);
-
-/**
- * @route PUT /api/scores/:id
- * @desc Update a score
- */
-router.put('/:id', updateScore);
-
-/**
- * @route DELETE /api/scores/:id
- * @desc Delete a score
- */
-router.delete('/:id', deleteScore);
+router.route('/:id')
+    .get(getScoreById)
+    .put(updateScore)
+    .delete(deleteScore);
 
 export default router;

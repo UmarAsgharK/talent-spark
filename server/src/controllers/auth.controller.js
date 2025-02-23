@@ -77,7 +77,7 @@ export async function login(req, res, next) {
             secure: isProduction,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             sameSite: 'strict',
-            path: '/api/auth/refreshToken',
+            path: '/api/auth/refresh',
         });
         return res.status(200).json({
             message: 'Login successful',
@@ -174,7 +174,7 @@ export async function oauthCallback(req, res, next) {
             secure: isProduction,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             sameSite: 'strict',
-            path: '/api/auth/refreshToken',
+            path: '/api/auth/refresh',
         });
         return res.redirect('/');
     } catch (error) {

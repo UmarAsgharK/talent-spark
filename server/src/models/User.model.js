@@ -17,13 +17,25 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            required: true,
+            required: function () { // Make password conditionally required
+                return !(this.googleId || this.facebookId); // Required if googleId and facebookId are NOT present
+            },
         },
         role: {
             type: String,
             enum: ['admin', 'judge', 'contestant', 'audience'],
             default: 'contestant',
         },
+        googleId: { // Add googleId field to store Google's user ID
+            type: String,
+            unique: true,
+            sparse: true, // Allows multiple documents to not have this field
+        },
+        facebookId: { // Add facebookId field for Facebook OAuth
+            type: String,
+            unique: true,
+            sparse: true, // Allows multiple documents to not have this field
+        }
         // Additional fields (e.g., if you don't want a separate Profile model)
         // bio: String,
         // profilePictureUrl: String,

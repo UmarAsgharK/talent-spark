@@ -10,34 +10,15 @@ import {
 
 const router = Router();
 
-/**
- * @route POST /api/rounds
- * @desc Create a new round
- */
-router.post('/', createRound);
+router
+    .route('/')
+    .post(createRound)
+    .get(getAllRounds);
 
-/**
- * @route GET /api/rounds
- * @desc Get all rounds
- */
-router.get('/', getAllRounds);
-
-/**
- * @route GET /api/rounds/:id
- * @desc Get a single round by ID
- */
-router.get('/:id', getRoundById);
-
-/**
- * @route PUT /api/rounds/:id
- * @desc Update a round
- */
-router.put('/:id', updateRound);
-
-/**
- * @route DELETE /api/rounds/:id
- * @desc Delete a round
- */
-router.delete('/:id', deleteRound);
+router
+    .route('/:id')
+    .get(getRoundById)
+    .put(updateRound)
+    .delete(deleteRound);
 
 export default router;

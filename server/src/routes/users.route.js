@@ -9,28 +9,12 @@ import {
 
 const router = Router();
 
-/**
- * @route GET /api/users
- * @desc Get all users (admin only, typically)
- */
-router.get('/', getAllUsers);
+router.route('/')
+    .get(getAllUsers);
 
-/**
- * @route GET /api/users/:id
- * @desc Get user by ID
- */
-router.get('/:id', getUserById);
-
-/**
- * @route PUT /api/users/:id
- * @desc Update user details
- */
-router.put('/:id', updateUser);
-
-/**
- * @route DELETE /api/users/:id
- * @desc Delete a user
- */
-router.delete('/:id', deleteUser);
+router.route('/:id')
+    .get(getUserById)
+    .put(updateUser)
+    .delete(deleteUser);
 
 export default router;

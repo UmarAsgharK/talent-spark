@@ -10,34 +10,13 @@ import {
 
 const router = Router();
 
-/**
- * @route POST /api/submissions
- * @desc Create a new submission (contestant uploads performance)
- */
-router.post('/', createSubmission);
+router.route('/')
+    .post(createSubmission)
+    .get(getSubmissions);
 
-/**
- * @route GET /api/submissions
- * @desc Get all submissions (optional: filter by round or user)
- */
-router.get('/', getSubmissions);
-
-/**
- * @route GET /api/submissions/:id
- * @desc Get a single submission by ID
- */
-router.get('/:id', getSubmissionById);
-
-/**
- * @route PUT /api/submissions/:id
- * @desc Update submission details
- */
-router.put('/:id', updateSubmission);
-
-/**
- * @route DELETE /api/submissions/:id
- * @desc Delete a submission
- */
-router.delete('/:id', deleteSubmission);
+router.route('/:id')
+    .get(getSubmissionById)
+    .put(updateSubmission)
+    .delete(deleteSubmission);
 
 export default router;
