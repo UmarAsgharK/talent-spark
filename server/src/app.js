@@ -30,9 +30,17 @@ const app = express();
 // -------------------------
 // Middleware Setup
 // -------------------------
+const allowedOrigins = ['http://localhost:5173', 'https://talent-spark.vercel.app'];
 app.use(cors({
-    origin: 'http://localhost:5173', // Set to your frontend URL
-    credentials: true,              // Allow cookies to be sent
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
 }));
 app.use(express.json());
 app.use(morgan('dev'));
