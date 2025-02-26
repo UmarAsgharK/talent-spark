@@ -6,6 +6,8 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
 import errorMiddleware from './middlewares/error.middleware.js';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 // Import Passport configuration to initialize strategies
 import './config/passport.js';
@@ -19,6 +21,9 @@ import submissionRoute from './routes/submission.route.js';
 import scoreRoute from './routes/score.route.js';
 import voteRoute from './routes/vote.route.js';
 import notificationsRoute from './routes/notifications.route.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
