@@ -68,13 +68,15 @@ export async function login(req, res, next) {
         );
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure: isProduction,
+            // secure: isProduction,
+            secure: true,
             maxAge: 15 * 60 * 1000,
             sameSite: 'strict',
         });
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: isProduction,
+            // secure: isProduction,
+            secure: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             sameSite: 'strict',
             // path: '/api/auth/refresh',
@@ -115,7 +117,8 @@ export async function refreshToken(req, res, next) {
         );
         res.cookie('accessToken', newAccessToken, {
             httpOnly: true,
-            secure: isProduction,
+            // secure: isProduction,
+            secure: true,
             maxAge: 15 * 60 * 1000,
             sameSite: 'strict',
         });
@@ -129,12 +132,14 @@ export async function logout(req, res, next) {
     try {
         res.clearCookie('accessToken', {
             httpOnly: true,
-            secure: isProduction,
+            // secure: isProduction,
+            secure: true,
             sameSite: 'strict',
         });
         res.clearCookie('refreshToken', {
             httpOnly: true,
-            secure: isProduction,
+            // secure: isProduction,
+            secure: true,
             sameSite: 'strict',
         });
         return res.status(200).json({ message: 'Logged out successfully' });
@@ -166,13 +171,15 @@ export async function oauthCallback(req, res, next) {
         );
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure: isProduction,
+            // secure: isProduction,
+            secure: true,
             maxAge: 15 * 60 * 1000,
             sameSite: 'strict',
         });
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure: isProduction,
+            // secure: isProduction,
+            secure: true,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             sameSite: 'strict',
         });
