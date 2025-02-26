@@ -77,7 +77,7 @@ export async function login(req, res, next) {
             secure: isProduction,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             sameSite: 'strict',
-            path: '/api/auth/refresh',
+            // path: '/api/auth/refresh',
         });
         return res.status(200).json({
             message: 'Login successful',
@@ -146,6 +146,7 @@ export async function logout(req, res, next) {
 /**
  * Handles OAuth callback by generating JWTs for the authenticated user.
  */
+// src/controllers/auth.controller.js
 export async function oauthCallback(req, res, next) {
     try {
         if (!req.user) {
@@ -174,10 +175,12 @@ export async function oauthCallback(req, res, next) {
             secure: isProduction,
             maxAge: 7 * 24 * 60 * 60 * 1000,
             sameSite: 'strict',
-            path: '/api/auth/refresh',
         });
-        return res.redirect('/');
+        // Redirect to the front-end OAuth callback page
+        const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
+        return res.redirect(`${CLIENT_URL}/auth/oauth/callback`);
     } catch (error) {
         next(error);
     }
 }
+

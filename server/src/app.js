@@ -25,12 +25,14 @@ const app = express();
 // -------------------------
 // Middleware Setup
 // -------------------------
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Set to your frontend URL
+    credentials: true,              // Allow cookies to be sent
+}));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(helmet());
 app.use(cookieParser());
-
 
 // Initialize Passport
 app.use(passport.initialize());

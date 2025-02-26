@@ -1,13 +1,14 @@
-// src/controllers/submission.controller.js
 import SubmissionModel from '../models/Submission.model.js';
 
 // POST /api/submissions
 export async function createSubmission(req, res, next) {
     try {
-        const { contestant, round, mediaUrl, description } = req.body;
+        const { contestant, competition, description } = req.body;
+        // req.file now contains the Cloudinary upload result
+        const mediaUrl = req.file ? req.file.path : '';
         const newSubmission = await SubmissionModel.create({
             contestant,
-            round,
+            competition,
             mediaUrl,
             description,
         });
@@ -20,15 +21,15 @@ export async function createSubmission(req, res, next) {
 // GET /api/submissions
 export async function getSubmissions(req, res, next) {
     try {
-        // Optional: filter by round or user
-        const { round, contestant } = req.query;
+        // Now using "competition" instead of "round"
+        const { competition, contestant } = req.query;
         const query = {};
-        if (round) query.round = round;
+        if (competition) query.competition = competition;
         if (contestant) query.contestant = contestant;
 
         const submissions = await SubmissionModel.find(query)
             .populate('contestant', 'name email')
-            .populate('round');
+            .populate('competition', 'name');
         return res.status(200).json(submissions);
     } catch (error) {
         next(error);
@@ -40,7 +41,7 @@ export async function getSubmissionById(req, res, next) {
     try {
         const submission = await SubmissionModel.findById(req.params.id)
             .populate('contestant', 'name email')
-            .populate('round');
+            .populate('competition', 'name');
         if (!submission) {
             return res.status(404).json({ message: 'Submission not found' });
         }

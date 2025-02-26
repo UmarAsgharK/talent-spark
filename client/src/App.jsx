@@ -1,22 +1,45 @@
 // src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Container } from '@mui/material';
-import LoginForm from './components/LoginForm';
-import RegisterForm from './components/RegisterForm';
+import { Container, GlobalStyles, Box } from '@mui/material';
+import AppRoutes from './routes';
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
 
 function App() {
   return (
-    <Router>
-      <Container sx={{ marginTop: 4 }}>
-        <Routes>
-          <Route path="/" element={<div>Welcome to TalentSpark</div>} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="*" element={<div>404: Page Not Found</div>} />
-        </Routes>
-      </Container>
-    </Router>
+    <>
+      <GlobalStyles
+        styles={{
+          body: {
+            margin: 0,
+            padding: 0,
+            backgroundColor: '#444',
+            backgroundImage: 'url("https://www.transparenttextures.com/patterns/axiom-pattern.png")',
+            backgroundRepeat: 'repeat',
+            minHeight: '100vh',
+          },
+          '#root': {
+            minHeight: '100vh',
+          },
+        }}
+      />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        }}
+      >
+        <Header />
+        {/* Main content area */}
+        <Box component="main" sx={{ flexGrow: 1, py: 4 }}>
+          <Container>
+            <AppRoutes />
+          </Container>
+        </Box>
+        <Footer />
+      </Box>
+    </>
   );
 }
 

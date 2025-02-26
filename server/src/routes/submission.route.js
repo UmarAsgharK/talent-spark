@@ -1,5 +1,7 @@
 // src/routes/submission.route.js
 import { Router } from 'express';
+import { authenticate } from '../middlewares/auth.middleware.js';
+import upload from '../middlewares/upload.js';
 import {
     createSubmission,
     getSubmissions,
@@ -11,12 +13,12 @@ import {
 const router = Router();
 
 router.route('/')
-    .post(createSubmission)
-    .get(getSubmissions);
+    .post(authenticate, upload.single('mediaUrl'), createSubmission)
+    .get(authenticate, getSubmissions);
 
 router.route('/:id')
-    .get(getSubmissionById)
-    .put(updateSubmission)
-    .delete(deleteSubmission);
+    .get(authenticate, getSubmissionById)
+    .put(authenticate, updateSubmission)
+    .delete(authenticate, deleteSubmission);
 
 export default router;

@@ -1,4 +1,6 @@
+// src/routes/competitions.route.js
 import { Router } from 'express';
+import { authenticate, authorizeRoles } from '../middlewares/auth.middleware.js';
 import {
     createCompetition,
     getAllCompetitions,
@@ -10,12 +12,12 @@ import {
 const router = Router();
 
 router.route('/')
-    .post(createCompetition)
+    .post(authenticate, authorizeRoles('organizer', 'admin'), createCompetition)
     .get(getAllCompetitions);
 
 router.route('/:id')
     .get(getCompetitionById)
-    .put(updateCompetition)
-    .delete(deleteCompetition);
+    .put(authenticate, authorizeRoles('organizer', 'admin'), updateCompetition)
+    .delete(authenticate, authorizeRoles('organizer', 'admin'), deleteCompetition);
 
 export default router;

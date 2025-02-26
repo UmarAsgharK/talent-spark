@@ -4,7 +4,9 @@ import CompetitionModel from '../models/Competition.model.js';
 // POST /api/competitions
 export async function createCompetition(req, res, next) {
     try {
-        const { name, description, startDate, endDate, isActive, createdBy } = req.body;
+        const { name, description, startDate, endDate, isActive } = req.body;
+        // Automatically use the logged-in user as the creator
+        const createdBy = req.user ? req.user._id : undefined;
         const newCompetition = await CompetitionModel.create({
             name,
             description,
